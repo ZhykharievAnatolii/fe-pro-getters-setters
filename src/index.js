@@ -20,4 +20,33 @@ export const school = {
     6: new Student('Eugene', [97, 34, 78, 85, 98, 65]),
     7: new Student('Ivan', [76, 89, 78, 98, 98, 99, 89, 96]),
   },
+
+  initGetter(gradeType, minGrade, maxGrade) {
+    Object.defineProperty(this, gradeType, {
+      get() {
+        const studentArr = Object.values(school.students);
+
+        let gradeFilter = studentArr.filter(function (item) {
+          if (item.averageGrade <= maxGrade && item.averageGrade >= minGrade) {
+            return item;
+          }
+        });
+
+        let gradeNames = gradeFilter.map(function (item) {
+          return item.name;
+        });
+
+        return gradeNames.join(', ');
+      },
+    });
+  },
+
+  init() {
+    this.initGetter('aGradeStudents', 90, 100);
+    this.initGetter('bGradeStudents', 75, 89);
+    this.initGetter('cGradeStudents', 60, 75);
+    this.initGetter('dGradeStudents', 0, 59);
+  },
 };
+
+school.init();
